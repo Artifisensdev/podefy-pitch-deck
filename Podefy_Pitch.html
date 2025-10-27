@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podefy: AI Studio for Media Creators - Professional Pitch Deck</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-in-out',
+                        'slide-up': 'slideUp 0.8s ease-out',
+                        'float': 'float 4s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s ease-in-out infinite',
+                        'gradient': 'gradient 8s ease infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+        }
+        @keyframes gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .slide.active {
+            display: block;
+        }
+        
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .ai-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .neural-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: grid-move 20s linear infinite;
+        }
+        
+        @keyframes grid-move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        .ai-glow {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient 3s ease infinite;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .navigation {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .slide-counter {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px 24px;
+            border-radius: 12px;
+            color: white;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+        }
+        
+        .chart-bar {
+            height: 20px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            background: #3b82f6;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 12px;
+            width: 2px;
+            height: calc(100% + 1rem);
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-900">
+    <!-- Navigation -->
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">← Previous</button>
+        <span class="slide-counter" id="slide-counter">Slide 1 of 16</span>
+        <button class="nav-btn" onclick="nextSlide()">Next →</button>
+    </div>
+
+    <!-- Slide 1: Title -->
+    <div class="slide active">
+        <div class="pt-24 pb-20 px-4 bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 relative overflow-hidden">
+            <div class="ai-pattern"></div>
+            <div class="neural-grid"></div>
+            <div class="container mx-auto relative z-10">
+                <div class="max-w-6xl mx-auto text-center">
+                    <div class="mb-12">
+                        <div class="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-2xl ai-glow">
+                            <span class="text-6xl">🎬</span>
+                        </div>
+                    </div>
+                    
+                    <h1 class="text-8xl font-bold mb-8 gradient-text drop-shadow-2xl animate-fade-in-up">
+                        Podefy
+                    </h1>
+                    
+                    <h2 class="text-4xl font-semibold text-white mb-4 animate-fade-in-up animation-delay-200 drop-shadow-lg">
+                        The AI Studio for Media Creators
+                    </h2>
+                    
+                    <p class="text-2xl text-blue-200 mb-4 animate-fade-in-up animation-delay-300 drop-shadow-md">
+                        Turning Ideas into Professional Content in Minutes, Not Months
+                    </p>
+                    
+                    <p class="text-3xl text-blue-100 mb-8 max-w-4xl mx-auto animate-fade-in-up animation-delay-400 drop-shadow-md">
+                        The all-in-one tool to save 80% of your time
+                    </p>
+                    
+                    <div class="glass-morphism rounded-2xl p-6 mb-12 animate-fade-in-up animation-delay-500 ai-glow">
+                        <p class="text-xl text-white font-bold">Seeking $300K Seed Funding</p>
+                        <p class="text-lg text-blue-200">Est. 2024 | Launching in Qatar</p>
+                    </div>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 animate-fade-in-up animation-delay-600 ai-glow">
+                        <p class="text-2xl text-white font-bold mb-4">Artifisens</p>
+                        <p class="text-xl text-blue-200">Mr Abderrazzak Zeddari - CEO & Founder</p>
+                        <p class="text-lg text-blue-300">contact@artifisens.fr | zeddari@artifisens.fr</p>
+                        <p class="text-lg text-blue-300">www.artifisens.fr | www.podefy.fr</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: The AI-Wrapper Revolution -->
+    <div class="slide">
+        <div class="pt-24 pb-20 px-4 bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 relative overflow-hidden">
+            <div class="ai-pattern"></div>
+            <div class="neural-grid"></div>
+            <div class="container mx-auto relative z-10">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-7xl font-bold text-white text-center mb-16 drop-shadow-2xl">The AI-Wrapper Revolution</h2>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mb-12 ai-glow">
+                        <h3 class="text-5xl font-bold text-white text-center mb-8">The Next Generation of Startups Don't Build AI Models</h3>
+                        <p class="text-2xl text-gray-200 text-center mb-8">They build intelligent SaaS solutions on top of existing large models—and they're generating billions in value.</p>
+                        
+                        <div class="grid md:grid-cols-3 gap-6 mt-8">
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-green-400 mb-2">$50B+</div>
+                                <p class="text-gray-300">Market value created by AI-wrapper companies in 2024</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-blue-400 mb-2">3-6 months</div>
+                                <p class="text-gray-300">Time to market vs. 3-5 years for traditional AI development</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-purple-400 mb-2">$100K-1M</div>
+                                <p class="text-gray-300">Development cost vs. $10M-100M+ for building AI models</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">🚀</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Faster Time to Market</h3>
+                            <p class="text-gray-200 text-lg">No need to spend years and millions developing proprietary AI models. Launch in months, not years.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">💰</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Higher Profit Margins</h3>
+                            <p class="text-gray-200 text-lg">Leverage existing AI infrastructure while capturing 60-80% gross margins on specialized applications.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">🎯</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Market-Specific Solutions</h3>
+                            <p class="text-gray-200 text-lg">Focus on solving real problems for specific industries while AI giants handle the heavy lifting.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">📈</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Exponential Scalability</h3>
+                            <p class="text-gray-200 text-lg">Small teams can generate massive revenues by intelligently orchestrating AI capabilities.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Success Stories -->
+    <div class="slide">
+        <div class="pt-24 pb-20 px-4 bg-gradient-to-br from-emerald-900 via-green-900 to-teal-900 relative overflow-hidden">
+            <div class="ai-pattern"></div>
+            <div class="neural-grid"></div>
+            <div class="container mx-auto relative z-10">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-7xl font-bold text-white text-center mb-16 drop-shadow-2xl">Billion-Dollar Success Stories</h2>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mb-12 ai-glow">
+                        <h3 class="text-5xl font-bold text-white text-center mb-8">AI-Wrapper Companies Are Creating Massive Value</h3>
+                        <p class="text-2xl text-gray-200 text-center mb-12">These companies prove that the biggest opportunity isn't building AI models—it's building the right applications on top of them.</p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">💻</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Cursor (AI Code Editor)</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Revenue Growth:</span>
+                                    <span class="text-green-400 font-bold">6,400% YoY</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">2024 ARR:</span>
+                                    <span class="text-green-400 font-bold">$100M+</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Valuation:</span>
+                                    <span class="text-blue-400 font-bold">$1.5-2.5B</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Team Size:</span>
+                                    <span class="text-yellow-400 font-bold">~30 people</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">✍️</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Jasper AI (Content Writing)</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Valuation:</span>
+                                    <span class="text-green-400 font-bold">$1.5B</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Funding Raised:</span>
+                                    <span class="text-blue-400 font-bold">$125M</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Users:</span>
+                                    <span class="text-yellow-400 font-bold">100K+</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Model:</span>
+                                    <span class="text-purple-400 font-bold">Built on GPT</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">⚡</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Bolt (AI Web Dev)</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Valuation:</span>
+                                    <span class="text-blue-400 font-bold">$700M</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Revenue Multiple:</span>
+                                    <span class="text-green-400 font-bold">18x ARR</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Target Users:</span>
+                                    <span class="text-yellow-400 font-bold">Non-engineers</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Launch Speed:</span>
+                                    <span class="text-purple-400 font-bold">Months</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">📝</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Copy.ai (Content Creation)</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">ARR:</span>
+                                    <span class="text-green-400 font-bold">$11M</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Users:</span>
+                                    <span class="text-blue-400 font-bold">13M+</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Growth:</span>
+                                    <span class="text-yellow-400 font-bold">500% YoY</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Model:</span>
+                                    <span class="text-purple-400 font-bold">Pure GPT wrapper</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: The Opportunity -->
+    <div class="slide">
+        <div class="pt-24 pb-20 px-4 bg-gradient-to-br from-purple-900 via-pink-900 to-rose-900 relative overflow-hidden">
+            <div class="ai-pattern"></div>
+            <div class="neural-grid"></div>
+            <div class="container mx-auto relative z-10">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-7xl font-bold text-white text-center mb-16 drop-shadow-2xl">The Trillion-Dollar Opportunity</h2>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mb-12 ai-glow">
+                        <h3 class="text-5xl font-bold text-white text-center mb-8">Why AI-Wrapper Startups Are the Future</h3>
+                        <p class="text-2xl text-gray-200 text-center mb-12">While tech giants build the infrastructure, smart startups capture the value by solving real problems for specific markets.</p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-8 mb-12">
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="text-center mb-6">
+                                <div class="text-6xl font-bold text-green-400 mb-2">$174B</div>
+                                <p class="text-gray-300">AI Market Size by 2030</p>
+                            </div>
+                            <p class="text-gray-200 text-center">The majority of this value will be captured by application-layer companies, not model builders.</p>
+                        </div>
+                        
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="text-center mb-6">
+                                <div class="text-6xl font-bold text-blue-400 mb-2">90%</div>
+                                <p class="text-gray-300">Of AI Value in Applications</p>
+                            </div>
+                            <p class="text-gray-200 text-center">Only 10% of AI value is in the models themselves—90% is in solving specific problems.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl ai-glow">
+                        <h3 class="text-4xl font-bold text-white text-center mb-8">The AI-Wrapper Advantage</h3>
+                        <div class="grid md:grid-cols-3 gap-8">
+                            <div class="text-center">
+                                <div class="text-4xl mb-4">🎯</div>
+                                <h4 class="text-xl font-bold text-white mb-2">Market Focus</h4>
+                                <p class="text-gray-300">Target specific industries and regions that big tech ignores</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl mb-4">⚡</div>
+                                <h4 class="text-xl font-bold text-white mb-2">Speed to Market</h4>
+                                <p class="text-gray-300">Launch products in months while others spend years on R&D</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl mb-4">💎</div>
+                                <h4 class="text-xl font-bold text-white mb-2">High Margins</h4>
+                                <p class="text-gray-300">Achieve 60-80% gross margins with lean, focused operations</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Problem -->
+    <div class="slide">
+        <div class="pt-24 pb-20 px-4 bg-gradient-to-br from-red-900 via-orange-900 to-yellow-900 relative overflow-hidden">
+            <div class="ai-pattern"></div>
+            <div class="neural-grid"></div>
+            <div class="container mx-auto relative z-10">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-7xl font-bold text-white text-center mb-16 drop-shadow-2xl">The Problem</h2>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mb-12 ai-glow">
+                        <h3 class="text-5xl font-bold text-white text-center mb-8">Creating Professional Content is Hard, Slow, and Expensive</h3>
+                        <p class="text-2xl text-gray-200 text-center mb-8">For creators, journalists, and brands in the MENA region, producing high-quality media presents major hurdles:</p>
+                        
+                        <div class="grid md:grid-cols-3 gap-6 mt-8">
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-red-400 mb-2">70%</div>
+                                <p class="text-gray-300">of creator time spent on production vs. creativity</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-orange-400 mb-2">$2K-10K</div>
+                                <p class="text-gray-300">Cost per professional video project</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-yellow-400 mb-2">95%</div>
+                                <p class="text-gray-300">of AI tools don't support regional Arabic dialects</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">💰</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">High Costs</h3>
+                            <p class="text-gray-200 text-lg">Hiring production teams, studios, and editors can cost thousands of dollars per project.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">⏰</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Time Consuming</h3>
+                            <p class="text-gray-200 text-lg">The traditional workflow from script to final video can take weeks, slowing down communication.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">⚙️</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Technical Barriers</h3>
+                            <p class="text-gray-200 text-lg">Mastering complex editing software, lighting, and audio gear requires specialized skills.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">🌍</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Language & Localization Gap</h3>
+                            <p class="text-gray-200 text-lg">Generic AI tools often fail to capture the nuance of Arabic dialects (e.g., Qatari, Moroccan, Gulf).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Solution -->
+    <div class="slide">
+        <div class="pt-24 pb-20 px-4 bg-gradient-to-br from-green-900 via-teal-900 to-cyan-900 relative overflow-hidden">
+            <div class="ai-pattern"></div>
+            <div class="neural-grid"></div>
+            <div class="container mx-auto relative z-10">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-7xl font-bold text-white text-center mb-16 drop-shadow-2xl">The Solution</h2>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mb-12 ai-glow">
+                        <h3 class="text-5xl font-bold text-white text-center mb-8">Podefy: Your End-to-End AI Content Studio</h3>
+                        <p class="text-2xl text-gray-200 text-center mb-8">We turn ideas into professional podcasts and documentaries—instantly. Our integrated platform allows anyone to:</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-8 mt-8">
+                            <div class="text-center">
+                                <h4 class="text-2xl font-bold text-red-300 mb-4">Traditional Workflow</h4>
+                                <div class="space-y-2 text-gray-300">
+                                    <p>• Script writing: 2-3 days</p>
+                                    <p>• Recording setup: 1 day</p>
+                                    <p>• Video production: 1-2 weeks</p>
+                                    <p>• Editing & post: 1 week</p>
+                                    <p class="font-bold text-red-400">Total: 2-4 weeks</p>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <h4 class="text-2xl font-bold text-green-300 mb-4">Podefy Workflow</h4>
+                                <div class="space-y-2 text-gray-300">
+                                    <p>• Input idea: 5 minutes</p>
+                                    <p>• AI generation: 10 minutes</p>
+                                    <p>• Customization: 15 minutes</p>
+                                    <p>• Export & publish: 2 minutes</p>
+                                    <p class="font-bold text-green-400">Total: 30 minutes</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mt-8">
+                            <div class="text-3xl font-bold text-green-400 mb-2">Reduce production costs by 85%</div>
+                            <p class="text-gray-300">4K video quality • Professional voice cloning • Cinema-grade editing</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">👤</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Generate Avatar</h3>
+                            <p class="text-gray-200 text-lg">Create lifelike AI avatars for your content with customizable appearance and voice.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">🎤</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Create Voices</h3>
+                            <p class="text-gray-200 text-lg">Clone your own voice or choose from hyper-realistic AI voices in Arabic, English, and French.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">🎥</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Produce Videos</h3>
+                            <p class="text-gray-200 text-lg">Use lifelike avatars or generate stunning video clips from text and images.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">✂️</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Automate Editing</h3>
+                            <p class="text-gray-200 text-lg">Our AI handles the heavy lifting, from cutting to adding subtitles and B-roll.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mt-12 ai-glow">
+                        <h3 class="text-4xl font-bold text-white text-center mb-4">From idea to finished product in minutes, not weeks.</h3>
+                        <p class="text-xl text-gray-200 text-center">Revolutionary speed for content creation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: How It Works -->
+    <div class="slide">
+        <div class="pt-24 pb-20 px-4 bg-gradient-to-br from-purple-900 via-pink-900 to-red-900 relative overflow-hidden">
+            <div class="ai-pattern"></div>
+            <div class="neural-grid"></div>
+            <div class="container mx-auto relative z-10">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-7xl font-bold text-white text-center mb-16 drop-shadow-2xl">How It Works</h2>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mb-12 ai-glow">
+                        <h3 class="text-5xl font-bold text-white text-center mb-8">The Podefy Creation Pipeline</h3>
+                        <p class="text-xl text-gray-200 text-center mb-8">Powered by best-in-class AI APIs • No technical skills required</p>
+                        
+                        <div class="text-center mb-8">
+                            <div class="text-2xl font-bold text-green-400 mb-2">Total Processing Time: 30 minutes</div>
+                            <p class="text-gray-300">vs. 2-4 weeks traditional workflow</p>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-4 gap-4 mb-8">
+                            <div class="text-center">
+                                <div class="text-sm text-blue-300">OpenAI GPT-4</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-sm text-blue-300">ElevenLabs</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-sm text-blue-300">Runway ML</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-sm text-blue-300">Stability AI</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-4 gap-8">
+                        <div class="stat-card rounded-2xl p-8 text-center">
+                            <div class="feature-icon">💡</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">IDEA</h3>
+                            <div class="text-lg font-bold text-green-400 mb-2">5 minutes</div>
+                            <p class="text-gray-200 text-sm">Input your concept, topic, or script.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8 text-center">
+                            <div class="feature-icon">✨</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">AI GENERATION</h3>
+                            <div class="text-lg font-bold text-green-400 mb-2">10 minutes</div>
+                            <p class="text-gray-200 text-sm">Our platform generates voice, avatar, and video assets using integrated APIs.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8 text-center">
+                            <div class="feature-icon">🎛️</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">CUSTOMIZE</h3>
+                            <div class="text-lg font-bold text-green-400 mb-2">15 minutes</div>
+                            <p class="text-gray-200 text-sm">Edit, add branding, and perfect your content with user-friendly tools.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8 text-center">
+                            <div class="feature-icon">🚀</div>
+                            <h3 class="text-2xl font-bold text-white mb-2">PUBLISH</h3>
+                            <div class="text-lg font-bold text-green-400 mb-2">2 minutes</div>
+                            <p class="text-gray-200 text-sm">Export professional content ready for YouTube, Instagram, TikTok.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Business Model -->
+    <div class="slide">
+        <div class="pt-24 pb-20 px-4 bg-gradient-to-br from-indigo-900 via-blue-900 to-purple-900 relative overflow-hidden">
+            <div class="ai-pattern"></div>
+            <div class="neural-grid"></div>
+            <div class="container mx-auto relative z-10">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-7xl font-bold text-white text-center mb-16 drop-shadow-2xl">Business Model</h2>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mb-12 ai-glow">
+                        <h3 class="text-5xl font-bold text-white text-center mb-8">Multiple, Scalable Revenue Streams</h3>
+                        <p class="text-2xl text-gray-200 text-center mb-12">We monetize our platform through a diversified model targeting both individual creators and large organizations.</p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">🎙️</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">AI Studio for Creators (B2C)</h3>
+                            <p class="text-gray-200 text-lg">Subscription plans and pay-per-use credits for influencers, journalists, and SMEs.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">🏢</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Enterprise Studio Licensing (B2B)</h3>
+                            <p class="text-gray-200 text-lg">White-label SaaS licenses for media houses, universities, and government teams.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">🧠</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">API Resale Margin</h3>
+                            <p class="text-gray-200 text-lg">We integrate and resell 3rd-party APIs (TTS, video) with a 30-50% markup, creating a high-margin "AI Layer."</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">🎬</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Production Services</h3>
+                            <p class="text-gray-200 text-lg">Our in-house "Podefy Originals" studio creates custom content for high-value clients.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8 md:col-span-2">
+                            <div class="feature-icon">🪙</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Marketplace (Phase 2)</h3>
+                            <p class="text-gray-200 text-lg">A platform for users to monetize and license their AI-generated content, with Podefy taking a 15-20% commission.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Traction -->
+    <div class="slide">
+        <div class="pt-24 pb-20 px-4 bg-gradient-to-br from-emerald-900 via-teal-900 to-cyan-900 relative overflow-hidden">
+            <div class="ai-pattern"></div>
+            <div class="neural-grid"></div>
+            <div class="container mx-auto relative z-10">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-7xl font-bold text-white text-center mb-16 drop-shadow-2xl">Traction & Validation</h2>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mb-12 ai-glow">
+                        <h3 class="text-5xl font-bold text-white text-center mb-8">We Are Already Building and Validating</h3>
+                        
+                        <div class="grid md:grid-cols-3 gap-6 mt-8">
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-green-400 mb-2">95%</div>
+                                <p class="text-gray-300">Platform uptime</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-blue-400 mb-2">2.5 min</div>
+                                <p class="text-gray-300">Average processing time</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-purple-400 mb-2">8.5/10</div>
+                                <p class="text-gray-300">User quality rating</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">✅</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">MVP Live</h3>
+                            <p class="text-gray-200 text-lg">Our core platform is functional, integrating video, image, and audio generation.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">✅</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">"Podefy Originals" Produced</h3>
+                            <p class="text-gray-200 text-lg">We have used our own tools to create internal demo projects, proving the concept works.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">✅</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Arabic Dialect Focus</h3>
+                            <p class="text-gray-200 text-lg">Successfully produced demo projects in Qatari, Moroccan, and Gulf Arabic dialects.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">✅</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Market Interest Confirmed</h3>
+                            <p class="text-gray-200 text-lg">Active conversations and interest from media professionals and educational partners in Qatar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Market Opportunity -->
+    <div class="slide">
+        <div class="pt-24 pb-20 px-4 bg-gradient-to-br from-amber-900 via-orange-900 to-red-900 relative overflow-hidden">
+            <div class="ai-pattern"></div>
+            <div class="neural-grid"></div>
+            <div class="container mx-auto relative z-10">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-7xl font-bold text-white text-center mb-16 drop-shadow-2xl">The Market Opportunity</h2>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mb-12 ai-glow">
+                        <h3 class="text-5xl font-bold text-white text-center mb-8">A Massive, Underserved Market at our Doorstep</h3>
+                        <p class="text-2xl text-gray-200 text-center mb-12">The MENA region is ripe for disruption:</p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">📈</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Booming Creator Economy</h3>
+                            <p class="text-gray-200 text-lg">Millions of creators and influencers are seeking tools to scale their content production.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">🌍</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">High Demand for Localized Content</h3>
+                            <p class="text-gray-200 text-lg">Brands and governments have a critical need for professional content in Arabic and its diverse dialects.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">🏗️</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Growing Media Hubs</h3>
+                            <p class="text-gray-200 text-lg">Qatar (Media City), UAE, and Saudi Arabia are investing billions in media and technology infrastructure.</p>
+                        </div>
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">🥇</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">First-Mover Advantage</h3>
+                            <p class="text-gray-200 text-lg">No competitor is offering a fully integrated, Arabic-focused AI studio platform.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mt-12 ai-glow">
+                        <h3 class="text-4xl font-bold text-white text-center mb-8">MENA Region Focus</h3>
+                        <div class="flex justify-center items-center gap-8">
+                            <div class="text-center">
+                                <div class="text-6xl mb-4">🇶🇦</div>
+                                <p class="text-xl text-gray-200">Qatar</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-6xl mb-4">🇦🇪</div>
+                                <p class="text-xl text-gray-200">UAE</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-6xl mb-4">🇸🇦</div>
+                                <p class="text-xl text-gray-200">Saudi Arabia</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Social Media Data -->
+    <div class="slide">
+        <div class="pt-24 pb-20 px-4 bg-gradient-to-br from-violet-900 via-purple-900 to-pink-900 relative overflow-hidden">
+            <div class="ai-pattern"></div>
+            <div class="neural-grid"></div>
+            <div class="container mx-auto relative z-10">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-7xl font-bold text-white text-center mb-16 drop-shadow-2xl">Social Media & Creator Economy Growth</h2>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mb-12 ai-glow">
+                        <h3 class="text-5xl font-bold text-white text-center mb-8">📱 Social Media Usage in the Middle East</h3>
+                        <p class="text-2xl text-gray-200 text-center mb-12">The Arab world (population ~496 million) has ~348 million internet users (≈ 70.2% of population). Social media users: ~228 million (≈ 46% of the Arab world population) as of 2025.</p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-3 gap-8 mb-12">
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">🇶🇦</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Qatar</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">2023 Users:</span>
+                                    <span class="text-green-400 font-bold">2.62M</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Population %:</span>
+                                    <span class="text-yellow-400 font-bold">96.8%</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">2025 Users:</span>
+                                    <span class="text-blue-400 font-bold">2.59M</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">2025 %:</span>
+                                    <span class="text-purple-400 font-bold">84%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">🇦🇪</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">United Arab Emirates</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">2024 Users:</span>
+                                    <span class="text-green-400 font-bold">11.50M</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Population %:</span>
+                                    <span class="text-yellow-400 font-bold">112.3%</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Growth:</span>
+                                    <span class="text-blue-400 font-bold">2015-2022</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">2015:</span>
+                                    <span class="text-purple-400 font-bold">5.40M</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">2022:</span>
+                                    <span class="text-purple-400 font-bold">10.68M</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">🇸🇦</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Saudi Arabia</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">2024 Users:</span>
+                                    <span class="text-green-400 font-bold">35.33M</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Population %:</span>
+                                    <span class="text-yellow-400 font-bold">94.3%</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">Growth:</span>
+                                    <span class="text-blue-400 font-bold">2014-2024</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">2014:</span>
+                                    <span class="text-purple-400 font-bold">7.6M</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">2022:</span>
+                                    <span class="text-purple-400 font-bold">29.5M</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mb-12 ai-glow">
+                        <h3 class="text-5xl font-bold text-white text-center mb-8">🎥 Content Creator Economy Growth</h3>
+                        <p class="text-2xl text-gray-200 text-center mb-12">The GCC creator economy has expanded rapidly with significant growth in influencers and content creators:</p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">📈</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">GCC Region Growth</h3>
+                            <div class="space-y-4">
+                                <div class="text-center">
+                                    <div class="text-4xl font-bold text-green-400 mb-2">74-75%</div>
+                                    <p class="text-gray-300">Increase in creators/influencers</p>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">2023:</span>
+                                    <span class="text-white font-bold">150,000</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-300">2025:</span>
+                                    <span class="text-white font-bold">263,000</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">🇦🇪</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">UAE Leadership</h3>
+                            <div class="space-y-4">
+                                <div class="text-center">
+                                    <div class="text-4xl font-bold text-blue-400 mb-2">2,415</div>
+                                    <p class="text-gray-300">Creators HQ participants</p>
+                                </div>
+                                <p class="text-gray-300 text-center">From 147 countries in first 6 months of 2025</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">🇶🇦</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Qatar Growth</h3>
+                            <div class="space-y-4">
+                                <div class="text-center">
+                                    <div class="text-4xl font-bold text-green-400 mb-2">Growing</div>
+                                    <p class="text-gray-300">Social media influencing</p>
+                                </div>
+                                <p class="text-gray-300 text-center">Increasing social-media influencing activity</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-2xl p-8">
+                            <div class="feature-icon">📊</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Key Insights</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-green-400">✓</span>
+                                    <span class="text-gray-300">High social media penetration</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="text-green-400">✓</span>
+                                    <span class="text-gray-300">Rapid creator economy growth</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="text-green-400">✓</span>
+                                    <span class="text-gray-300">Multiple account usage</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Financial Projections -->
+    <div class="slide">
+        <div class="pt-24 pb-20 px-4 bg-gradient-to-br from-slate-900 via-gray-900 to-blue-900 relative overflow-hidden">
+            <div class="ai-pattern"></div>
+            <div class="neural-grid"></div>
+            <div class="container mx-auto relative z-10">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-7xl font-bold text-white text-center mb-16 drop-shadow-2xl">Financial Projections</h2>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mb-12 ai-glow">
+                        <h3 class="text-5xl font-bold text-white text-center mb-8">A Path to Profitability and Scale</h3>
+                        <p class="text-2xl text-gray-200 text-center mb-12">Our model is designed for high margins and exponential growth.</p>
+                    </div>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mb-12 ai-glow">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-white">
+                                <thead>
+                                    <tr class="border-b border-white/20">
+                                        <th class="text-left py-4 px-6 text-xl font-bold">Year</th>
+                                        <th class="text-left py-4 px-6 text-xl font-bold">Users / B2B Deals</th>
+                                        <th class="text-left py-4 px-6 text-xl font-bold">Avg. Revenue / User</th>
+                                        <th class="text-left py-4 px-6 text-xl font-bold">Projected Revenue</th>
+                                        <th class="text-left py-4 px-6 text-xl font-bold">Target Profit Margin</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-white/10">
+                                        <td class="py-4 px-6 text-lg font-bold">2025</td>
+                                        <td class="py-4 px-6 text-lg">1,000</td>
+                                        <td class="py-4 px-6 text-lg">$25 / mo</td>
+                                        <td class="py-4 px-6 text-lg font-bold text-green-400">$300k</td>
+                                        <td class="py-4 px-6 text-lg font-bold text-green-400">25%</td>
+                                    </tr>
+                                    <tr class="border-b border-white/10">
+                                        <td class="py-4 px-6 text-lg font-bold">2026</td>
+                                        <td class="py-4 px-6 text-lg">10,000+</td>
+                                        <td class="py-4 px-6 text-lg">$30 / mo</td>
+                                        <td class="py-4 px-6 text-lg font-bold text-green-400">$1.8M</td>
+                                        <td class="py-4 px-6 text-lg font-bold text-green-400">40%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-4 px-6 text-lg font-bold">2027</td>
+                                        <td class="py-4 px-6 text-lg">50,000+</td>
+                                        <td class="py-4 px-6 text-lg">$40 / mo</td>
+                                        <td class="py-4 px-6 text-lg font-bold text-green-400">$8-10M</td>
+                                        <td class="py-4 px-6 text-lg font-bold text-green-400">55%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl ai-glow">
+                        <h3 class="text-4xl font-bold text-white text-center mb-8">Unit Economics & Key Metrics</h3>
+                        
+                        <div class="grid md:grid-cols-3 gap-8 mb-8">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-green-400 mb-2">$45</div>
+                                <p class="text-gray-300">Customer Acquisition Cost</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-blue-400 mb-2">$1,200</div>
+                                <p class="text-gray-300">Customer Lifetime Value</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-purple-400 mb-2">26.7x</div>
+                                <p class="text-gray-300">LTV/CAC Ratio</p>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-green-400 mb-2">Cash flow positive by Month 18</div>
+                            <p class="text-gray-300">Gross Margin Target: 55-65% per content package</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: Use of Funds -->
+    <div class="slide">
+        <div class="pt-24 pb-20 px-4 bg-gradient-to-br from-purple-900 via-pink-900 to-red-900 relative overflow-hidden">
+            <div class="ai-pattern"></div>
+            <div class="neural-grid"></div>
+            <div class="container mx-auto relative z-10">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-7xl font-bold text-white text-center mb-16 drop-shadow-2xl">The Ask & Use of Funds</h2>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mb-12 ai-glow">
+                        <div class="text-center mb-16">
+                            <h3 class="text-6xl font-bold gradient-text mb-8">
+                                We Are Seeking $300,000 to Launch in Qatar
+                            </h3>
+                            <p class="text-3xl text-gray-200">
+                                This seed funding will allow us to scale our MVP, acquire our first 500 users, and secure 3 enterprise pilots within 12 months.
+                            </p>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-12">
+                            <div>
+                                <h4 class="text-4xl font-bold text-white mb-12">Allocation of Funds:</h4>
+                                <div class="space-y-8">
+                                    <div class="flex items-center gap-8 p-8 stat-card rounded-2xl">
+                                        <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center shadow-2xl ai-glow">
+                                            <span class="text-white font-bold text-xl">40%</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-2xl font-bold text-white">👨‍💻 Artifisens Staff & Developers</h5>
+                                            <p class="text-gray-300 text-lg">Core team salaries, product development, and API integrations.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center gap-8 p-8 stat-card rounded-2xl">
+                                        <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-2xl ai-glow">
+                                            <span class="text-white font-bold text-xl">25%</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-2xl font-bold text-white">🎁 Free Trials for New Users</h5>
+                                            <p class="text-gray-300 text-lg">Free token allocation to onboard new users and build user base.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center gap-8 p-8 stat-card rounded-2xl">
+                                        <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-2xl ai-glow">
+                                            <span class="text-white font-bold text-xl">20%</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-2xl font-bold text-white">☁️ API & GPU Infrastructure</h5>
+                                            <p class="text-gray-300 text-lg">Scaling our usage of Runway, ElevenLabs, OpenAI, and cloud hosting.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center gap-8 p-8 stat-card rounded-2xl">
+                                        <div class="w-20 h-20 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center shadow-2xl ai-glow">
+                                            <span class="text-white font-bold text-xl">10%</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-2xl font-bold text-white">📣 Marketing & Partnerships</h5>
+                                            <p class="text-gray-300 text-lg">Launch campaign in Qatar and onboarding key creators.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center gap-8 p-8 stat-card rounded-2xl">
+                                        <div class="w-20 h-20 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center shadow-2xl ai-glow">
+                                            <span class="text-white font-bold text-xl">3%</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-2xl font-bold text-white">🏢 Office in Qatar</h5>
+                                            <p class="text-gray-300 text-lg">Office space, equipment, and operational setup in Qatar.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center gap-8 p-8 stat-card rounded-2xl">
+                                        <div class="w-20 h-20 bg-gradient-to-br from-gray-500 to-slate-500 rounded-full flex items-center justify-center shadow-2xl ai-glow">
+                                            <span class="text-white font-bold text-xl">2%</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-2xl font-bold text-white">🧾 Legal & Operations</h5>
+                                            <p class="text-gray-300 text-lg">Company registration, trademarks, and contracts.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="glass-morphism rounded-3xl p-10 shadow-2xl ai-glow">
+                                <h4 class="text-4xl font-bold mb-12 text-white">Key Milestones</h4>
+                                <div class="space-y-8">
+                                    <div class="timeline-item">
+                                        <h5 class="text-2xl font-bold text-white mb-2">500 Users</h5>
+                                        <p class="text-gray-300 text-lg">Acquire first 500 active users</p>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <h5 class="text-2xl font-bold text-white mb-2">3 Enterprise Pilots</h5>
+                                        <p class="text-gray-300 text-lg">Secure 3 enterprise partnerships</p>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <h5 class="text-2xl font-bold text-white mb-2">12 Months</h5>
+                                        <p class="text-gray-300 text-lg">Complete all milestones within timeline</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Roadmap -->
+    <div class="slide">
+        <div class="pt-24 pb-20 px-4 bg-gradient-to-br from-teal-900 via-cyan-900 to-blue-900 relative overflow-hidden">
+            <div class="ai-pattern"></div>
+            <div class="neural-grid"></div>
+            <div class="container mx-auto relative z-10">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-7xl font-bold text-white text-center mb-16 drop-shadow-2xl">The Roadmap</h2>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mb-12 ai-glow">
+                        <h3 class="text-5xl font-bold text-white text-center mb-8">Our Vision for the Future</h3>
+                    </div>
+                    
+                    <div class="space-y-8">
+                        <div class="glass-morphism rounded-3xl p-12 shadow-2xl ai-glow">
+                            <div class="flex items-start gap-8">
+                                <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center shadow-2xl ai-glow">
+                                    <span class="text-white font-bold text-2xl">1</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-4xl font-bold text-white mb-6">Phase 1 (Q1-Q4 2025): Scale & Validate</h3>
+                                    <ul class="space-y-3 text-xl text-gray-200">
+                                        <li>• Q2 2025: Beta launch in Qatar</li>
+                                        <li>• Q3 2025: 500+ creators onboarded</li>
+                                        <li>• Q4 2025: 3 enterprise pilots secured</li>
+                                        <li>• Continuous: Product refinement based on feedback</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-morphism rounded-3xl p-12 shadow-2xl ai-glow">
+                            <div class="flex items-start gap-8">
+                                <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-2xl ai-glow">
+                                    <span class="text-white font-bold text-2xl">2</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-4xl font-bold text-white mb-6">Phase 2 (Q1-Q4 2026): Monetize & Expand</h3>
+                                    <ul class="space-y-3 text-xl text-gray-200">
+                                        <li>• Q1 2026: Marketplace & monetization features launch</li>
+                                        <li>• Q2 2026: UAE expansion</li>
+                                        <li>• Q3 2026: Saudi Arabia expansion</li>
+                                        <li>• Q4 2026: Seed+ round ($2-5M)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-morphism rounded-3xl p-12 shadow-2xl ai-glow">
+                            <div class="flex items-start gap-8">
+                                <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-2xl ai-glow">
+                                    <span class="text-white font-bold text-2xl">3</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-4xl font-bold text-white mb-6">Phase 3 (2027+): Dominate & Innovate</h3>
+                                    <ul class="space-y-3 text-xl text-gray-200">
+                                        <li>• 2027: Custom Arabic AI models development</li>
+                                        <li>• 2027: MENA region market leadership</li>
+                                        <li>• 2028: Series A round ($10-20M)</li>
+                                        <li>• 2029: International expansion</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Team -->
+    <div class="slide">
+        <div class="pt-24 pb-20 px-4 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 relative overflow-hidden">
+            <div class="ai-pattern"></div>
+            <div class="neural-grid"></div>
+            <div class="container mx-auto relative z-10">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-7xl font-bold text-white text-center mb-16 drop-shadow-2xl">The Team</h2>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mb-12 ai-glow">
+                        <h3 class="text-5xl font-bold text-white text-center mb-8">Experienced Leadership</h3>
+                        <p class="text-2xl text-gray-200 text-center mb-12">Building the future of AI-powered content creation</p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="stat-card rounded-2xl p-8 text-center">
+                            <div class="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-2xl ai-glow">
+                                <span class="text-4xl">👑</span>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Mr Zaddari Abderrazzak</h3>
+                            <p class="text-lg text-blue-200 mb-4">CEO Founder</p>
+                            <p class="text-gray-200 text-sm mb-6">Strategic leader driving innovation and growth in AI-powered content creation.</p>
+                        </div>
+                        
+                        <div class="stat-card rounded-2xl p-8 text-center">
+                            <div class="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-green-500 to-teal-600 rounded-full flex items-center justify-center shadow-2xl ai-glow">
+                                <span class="text-4xl">💰</span>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Mr Benmbarek Jamal</h3>
+                            <p class="text-lg text-blue-200 mb-4">CFO Co-Founder</p>
+                            <p class="text-gray-200 text-sm mb-6">Financial strategist ensuring sustainable growth and optimal resource allocation.</p>
+                        </div>
+                        
+                        <div class="stat-card rounded-2xl p-8 text-center">
+                            <div class="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center shadow-2xl ai-glow">
+                                <span class="text-4xl">👨‍💻</span>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Mr Hatim Abderrafie</h3>
+                            <p class="text-lg text-blue-200 mb-4">CTO Co-Founder</p>
+                            <p class="text-gray-200 text-sm mb-6">Technical visionary with expertise in AI, machine learning, and scalable platform development.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-morphism rounded-3xl p-12 shadow-2xl mt-12 ai-glow">
+                        <h3 class="text-4xl font-bold text-white text-center mb-8">Contact Information</h3>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="text-center">
+                                <h4 class="text-2xl font-bold text-white mb-4">Team Contacts</h4>
+                                <div class="space-y-3">
+                                    <p class="text-gray-300">Hatim@artifisens.fr</p>
+                                    <p class="text-gray-300">Jamal@artifisens.fr</p>
+                                    <p class="text-gray-300">zeddari@artifisens.fr</p>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <h4 class="text-2xl font-bold text-white mb-4">Company Websites</h4>
+                                <div class="space-y-3">
+                                    <p class="text-gray-300">www.artifisens.fr</p>
+                                    <p class="text-gray-300">www.podefy.fr</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13: Contact -->
+    <div class="slide">
+        <div class="pt-24 pb-20 px-4 bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 relative overflow-hidden">
+            <div class="ai-pattern"></div>
+            <div class="neural-grid"></div>
+            <div class="container mx-auto relative z-10">
+                <div class="max-w-6xl mx-auto text-center">
+                    <h2 class="text-7xl font-bold text-white mb-16 drop-shadow-2xl">Let's Build the Future of Content, Together</h2>
+                    
+                    <div class="glass-morphism rounded-3xl p-16 shadow-2xl ai-glow">
+                        <div class="text-9xl font-bold gradient-text mb-12 drop-shadow-2xl">
+                            Podefy
+                        </div>
+                        
+                        <div class="space-y-8 text-white mb-16">
+                            <p class="text-2xl text-blue-200">www.artifisens.fr</p>
+                            <p class="text-2xl text-blue-200">www.podefy.fr</p>
+                        </div>
+                        
+                        <div class="glass-morphism rounded-3xl p-12 shadow-2xl ai-glow">
+                            <h3 class="text-5xl font-bold text-white mb-8">Thank You</h3>
+                            <div class="flex justify-center items-center gap-16">
+                                <div class="text-center group">
+                                    <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center shadow-2xl ai-glow group-hover:scale-110 transition-transform duration-300">
+                                        <span class="text-3xl">🇶🇦</span>
+                                    </div>
+                                    <p class="text-xl text-gray-200 mt-4">Qatar</p>
+                                </div>
+                                <div class="text-center group">
+                                    <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-2xl ai-glow group-hover:scale-110 transition-transform duration-300">
+                                        <span class="text-3xl">🇦🇪</span>
+                                    </div>
+                                    <p class="text-xl text-gray-200 mt-4">UAE</p>
+                                </div>
+                                <div class="text-center group">
+                                    <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-2xl ai-glow group-hover:scale-110 transition-transform duration-300">
+                                        <span class="text-3xl">🇸🇦</span>
+                                    </div>
+                                    <p class="text-xl text-gray-200 mt-4">Saudi Arabia</p>
+                                </div>
+                            </div>
+                            <p class="text-2xl text-gray-200 mt-8">Ready to revolutionize content creation in the MENA region</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 16;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            if (n >= totalSlides) currentSlide = 0;
+            if (n < 0) currentSlide = totalSlides - 1;
+            
+            slides[currentSlide].classList.add('active');
+            document.getElementById('slide-counter').textContent = `Slide ${currentSlide + 1} of ${totalSlides}`;
+        }
+
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+
+        function previousSlide() {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
